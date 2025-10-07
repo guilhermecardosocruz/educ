@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -------------------------
+   Tema base (claro)
+-------------------------- */
+:root {
+  --color-secondary: #0A66FF;           /* Azul EDUC */
+  --color-bg: #ffffff;                   /* Fundo principal */
+  --color-surface: #ffffff;              /* Cartões/superfícies */
+  --color-text: #111827;                 /* gray-900 */
+  --color-text-muted: #4b5563;           /* gray-600 */
+  --color-border: #e5e7eb;               /* gray-200 */
+  --ring-a11y: #0A66FF;                  /* foco visível */
+}
+
+html, body {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Foco visível */
+:focus-visible {
+  outline: 3px solid var(--ring-a11y);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+/* Alvos mínimos de toque */
+a, button, [role="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Inputs com foco */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring-a11y) 35%, transparent);
+  outline: 3px solid color-mix(in oklab, var(--ring-a11y) 80%, white);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+/* Preferência do usuário: reduzir animações */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print-friendly */
+@media print {
+  body { background: #fff; color: #000; }
+}
+
+/* Utilidades */
+.badge-contrast {
+  background: var(--color-secondary);
+  color: #fff;
+}
+.btn-a11y {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.6rem 1rem;
+  border-radius: 0.75rem;
+}
+
+/* Classes Tailwind comuns "ligadas" às variáveis do tema */
+.bg-white { background-color: var(--color-surface) !important; }
+.text-gray-600 { color: var(--color-text-muted) !important; }
+.text-gray-500 { color: color-mix(in oklab, var(--color-text) 65%, transparent) !important; }
+.text-gray-700 { color: color-mix(in oklab, var(--color-text) 85%, transparent) !important; }
+.border { border-color: var(--color-border) !important; }
+
+/* Campos com erro */
+.is-invalid { border-color: #dc2626 !important; }
+.is-invalid:focus-visible {
+  outline-color: #dc2626;
+  box-shadow: 0 0 0 3px color-mix(in oklab, #dc2626 35%, transparent);
+}
+
+/* -------------------------
+   Tema escuro automático
+-------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-secondary: #0A66FF;        /* mantém identidade azul */
+    --color-bg: #0b1220;               /* fundo escuro */
+    --color-surface: #0f172a;          /* slate-900 approx */
+    --color-text: #e5e7eb;             /* gray-200 */
+    --color-text-muted: #cbd5e1;       /* slate-300 */
+    --color-border: #1f2937;           /* gray-800 */
+    --ring-a11y: #3b82f6;              /* foco visível em dark (azul claro) */
+  }
+
+  html, body {
+    background: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  /* Ajustes de contraste para textos “muted” */
+  .text-gray-600 { color: var(--color-text-muted) !important; }
+  .text-gray-500 { color: color-mix(in oklab, var(--color-text) 75%, transparent) !important; }
+  .text-gray-700 { color: var(--color-text) !important; }
+
+  /* Superfícies e bordas */
+  .bg-white { background-color: var(--color-surface) !important; }
+  .border { border-color: var(--color-border) !important; }
+
+  /* Botões primários ainda usam branco no texto para AA */
+  .btn-a11y,
+  .badge-contrast {
+    color: #fff;
+    background: var(--color-secondary);
+  }
+
+  /* Links sublinhados ganham melhor contraste */
+  a { color: var(--color-secondary); }
+}
+
+/* -------------------------
+   Helpers opcionais de tema
+-------------------------- */
+/* Força “cards” a usarem a superfície do tema sem alterar código existente */
+.card-theme {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
